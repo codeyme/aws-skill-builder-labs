@@ -3,7 +3,6 @@
 ### Objective
 Securely host a static website using Amazon S3 and serve it globally through CloudFront, leveraging **Origin Access Control (OAC)** to keep the S3 bucket private.
 
----
 
 ### Steps & Key Observations
 
@@ -37,7 +36,6 @@ Securely host a static website using Amazon S3 and serve it globally through Clo
 - Website is accessible via CloudFront domain (e.g., `https://d123abc4xyz567.cloudfront.net`).
 - Content is secure, fast, and scalable.
 
----
 
 ### Key Takeaways
 - S3 static hosting is easy but not secure without public access.
@@ -45,7 +43,6 @@ Securely host a static website using Amazon S3 and serve it globally through Clo
 - OAC is the modern, IAM-integrated alternative to OAI.
 - Custom error responses are critical for SPA routing in private S3 setups.
 
----
 
 ###  Architecture Diagram
 (See image in repo: `architecture.png`)
@@ -58,13 +55,11 @@ Securely host a static website using Amazon S3 and serve it globally through Clo
 [ S3 Bucket (Private, No Static Hosting) ]
 ```
 
----
 
 ### Deployment Notes
 - Use `aws s3 cp` to upload content.
 - Use `aws cloudfront create-distribution` or Console for setup.
 - Test through CloudFront domain after cache invalidation if needed.
 
----
 
 ### Last Updated: May 2025
