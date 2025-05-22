@@ -2,7 +2,7 @@
 
 This project demonstrates how to build a **fully serverless contact form** on AWS using Free Tier services. It combines static web hosting, API Gateway, AWS Lambda, and Amazon SES to collect and deliver contact messages via email — all without managing a single server.
 
----
+
 
 ## 🚀 Features
 
@@ -12,11 +12,7 @@ This project demonstrates how to build a **fully serverless contact form** on AW
 - 🔐 Secure access using **IAM roles with least-privilege**
 - 💸 100% within the AWS Free Tier
 
----
 
-## 📌 Architecture Overview
-
-![Architecture](./diagram.png)
 
 ### 🔁 Data Flow
 
@@ -25,12 +21,12 @@ This project demonstrates how to build a **fully serverless contact form** on AW
 3. **API Gateway invokes a Lambda function**, which parses the form data.
 4. **Lambda sends an email** via Amazon SES.
 
----
+
 
 ## 🧱 AWS Services Used
 
 | Service         | Purpose                          |
-|-----------------|----------------------------------|
+|--|-|
 | **S3**          | Hosts the static website         |
 | **CloudFront**  | CDN for global delivery & HTTPS  |
 | **Lambda**      | Handles form processing          |
@@ -38,7 +34,7 @@ This project demonstrates how to build a **fully serverless contact form** on AW
 | **SES**         | Sends email notifications        |
 | **IAM**         | Manages secure access            |
 
----
+
 
 ## 🧪 Setup Instructions
 
@@ -48,7 +44,7 @@ This project demonstrates how to build a **fully serverless contact form** on AW
 - Domain email address for SES (Gmail, Outlook, etc.)
 - Basic knowledge of AWS Console and HTML/JavaScript
 
----
+
 
 ### 📄 Step 1: Create the HTML Contact Form
 
@@ -60,26 +56,16 @@ Create a simple form with:
 
 Use JavaScript `fetch()` to POST the form data to your API Gateway endpoint.
 
----
+
 
 ### 🪣 Step 2: Upload to Amazon S3
 
 1. Create an S3 bucket with a unique name.
-2. Enable **static website hosting**.
+2. Since I used OAC not enabling **static website hosting**.
 3. Upload `login.html` and other static assets.
 4. (If not using OAC) Disable **Block Public Access** and attach a public-read policy.
 
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [{
-    "Sid": "PublicReadGetObject",
-    "Effect": "Allow",
-    "Principal": "*",
-    "Action": "s3:GetObject",
-    "Resource": "arn:aws:s3:::your-bucket-name/*"
-  }]
-}
+
 ### 🌍 Step 3: Set Up CloudFront
 
 1. Navigate to the CloudFront service in the AWS Console.
@@ -89,8 +75,9 @@ Use JavaScript `fetch()` to POST the form data to your API Gateway endpoint.
 5. (Optional) Enable compression and viewer protocol policy (e.g., Redirect HTTP to HTTPS).
 6. Click **Create distribution** and wait for deployment to finish.
 7. Copy the **CloudFront domain name** (e.g., `https://d1234abcd.cloudfront.net`) — this will be your public website URL.
+8. In error page, add 403 and 404 error redirection.
 
----
+
 
 ### 🧠 Step 4: Create the Lambda Function
 
@@ -103,7 +90,7 @@ Use JavaScript `fetch()` to POST the form data to your API Gateway endpoint.
 7. Set the function handler to `lambda_function.lambda_handler`.
 8. Adjust the **timeout** to 3 seconds and **memory** to 128MB under the Configuration tab.
 
----
+
 
 ### 🔐 Step 5: IAM Permissions for Lambda
 
@@ -113,7 +100,7 @@ Use JavaScript `fetch()` to POST the form data to your API Gateway endpoint.
 4. Use the visual editor or JSON tab to add permissions that allow `ses:SendEmail`.
 5. Save the policy and confirm it appears under the attached permissions list for the role.
 
----
+
 
 ### ✉️ Step 6: Configure Amazon SES
 
@@ -124,7 +111,7 @@ Use JavaScript `fetch()` to POST the form data to your API Gateway endpoint.
 5. Repeat this process for both the sender and recipient email addresses (if different).
 6. Make sure SES is in the same AWS Region as your Lambda function (e.g., `us-west-1`).
 
----
+
 
 ### 🔁 Step 7: Test Lambda Function Manually
 
@@ -133,7 +120,7 @@ Use JavaScript `fetch()` to POST the form data to your API Gateway endpoint.
 3. Run the test and check the **Execution results**.
 4. Navigate to **CloudWatch Logs** to confirm the email was sent (look for a `MessageId`).
 
----
+
 
 ### 🔌 Step 8: Create API Gateway HTTP API
 
